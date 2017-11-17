@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 from random import sample
 from time import perf_counter
-import Sorts
-rnglist = sample(range(20000), k=20000)
+from Sorts import quicksort, merge_sort, bubble_sort, insertion_sort, selection_sort
+
 
 def clock(algorithm, rnglistthing):
     start = perf_counter()
@@ -10,29 +10,29 @@ def clock(algorithm, rnglistthing):
     end = perf_counter()
     time_elapsed = end - start
     return time_elapsed
+
 y = []
-for n in range (1000, 20000, 1000):
+q = []
+m = []
+b = []
+i = []
+s = []
+for n in range (1000, 20001, 1000):
     y.append(n)
-x =[]
-for n in range (1000, 20000, 1000):
-    x.append(clock(Sorts.quicksort, rnglist[0:n]))
-z =[]
-for n in range (1000, 20000, 1000):
-    z.append(clock(Sorts.merge_sort, rnglist[0:n])) 
-b =[]
-for n in range (1000, 20000, 1000):
-    b.append(clock(Sorts.bubble_sort, rnglist[0:n])) 
-v =[]
-for n in range (1000, 20000, 1000):
-    v.append(clock(Sorts.insertion_sort, rnglist[0:n]))
-k =[]
-for n in range (1000, 20000, 1000):
-    k.append(clock(Sorts.selection_sort, rnglist[0:n]))
+    rnglist = sample(range(n), n)
     
+    q.append(clock(quicksort, rnglist.copy()))
+    m.append(clock(merge_sort, rnglist.copy())) 
+    b.append(clock(bubble_sort, rnglist.copy())) 
+    i.append(clock(insertion_sort, rnglist.copy()))
+    s.append(clock(selection_sort, rnglist.copy()))
 
 
-
-plt.plot (x, y, marker="*", color="purple", label="Quicksort")
+plt.plot (q, y, marker="*", color="purple", label="Quicksort")
+plt.plot (m, y, marker="^", color="blue", label="Merge sort")
+plt.plot (b, y, marker="s", color="red", label="Bubble sort")
+plt.plot (i, y, marker="D", color="yellow", label="Insertion sort")
+plt.plot (s, y, marker="|", color="green", label="Selection sort")
 
 
 #Labels axises
